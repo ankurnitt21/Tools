@@ -3,8 +3,8 @@ from PIL import Image
 import mss
 import cv2
 import numpy as np
-import time
 import pyperclip  # Import the pyperclip library
+import time
 
 # Set the Tesseract executable path if needed
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'  # Update with your actual path
@@ -48,33 +48,28 @@ def perform_ocr(image_path):
     text = pytesseract.image_to_string(image)
     return text
 
-def main():
+def capture_and_process():
+    """
+    Captures a screenshot, performs OCR, and copies the text to the clipboard.
+    """
     print("Starting the process...")
 
     try:
-        while True:
-            # Capture the region of the screen at high quality
-            frame = capture_screen(capture_region)
+        # Capture the region of the screen at high quality
+        frame = capture_screen(capture_region)
 
-            # Save the screenshot to the specified path
-            save_screenshot(frame, screenshot_path)
-            print(f"Screenshot saved to {screenshot_path}")
+        # Save the screenshot to the specified path
+        save_screenshot(frame, screenshot_path)
+        print(f"Screenshot saved to {screenshot_path}")
 
-            # Perform OCR on the saved screenshot
-            extracted_text = perform_ocr(screenshot_path)
-            print("\nExtracted Text:")
-            print(extracted_text)
+        # Perform OCR on the saved screenshot
+        extracted_text = perform_ocr(screenshot_path)
+        print("\nExtracted Text:")
+        print(extracted_text)
 
-            # Copy the extracted text to clipboard using pyperclip
-            pyperclip.copy(extracted_text)
-            print("\nText copied to clipboard!")
+        # Copy the extracted text to clipboard using pyperclip
+        pyperclip.copy(extracted_text)
+        print("\nText copied to clipboard!")
 
-            # Pause briefly to reduce CPU load
-            time.sleep(1)  # Adjust sleep time if needed
-            break  # Remove or adjust for continuous operation
-
-    except KeyboardInterrupt:
-        print("Process Stopped by User.")
-
-if __name__ == "__main__":
-    main()
+    except Exception as e:
+        print(f"Error occurred: {e}")
