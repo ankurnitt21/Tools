@@ -68,10 +68,12 @@ class ScreenshotApp:
             self.update_entry_fields()
             self.step = 2  # Move to reset step
         else:  # Reset and prepare for a new set of coordinates
+            self.capture_screenshot()  # Automatically trigger screenshot on 3rd press
             self.coordinates = {"start": None, "end": None}
             self.update_entry_fields()
             print("Coordinates reset. Ready for new capture.")
             self.step = 0  # Reset step
+
 
     def update_entry_fields(self):
         """Updates the Entry fields with the current coordinates."""
